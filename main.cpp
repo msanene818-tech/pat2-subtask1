@@ -2,7 +2,7 @@
 #include <string>
 #include <cctype>
 
-// Function that returns the Morse code equivalent of an uppercase character
+// Function to return Morse code for uppercase letters A-Z
 std::string getMorseCode(char c) {
     switch (c) {
         case 'A': return ".-";
@@ -31,35 +31,30 @@ std::string getMorseCode(char c) {
         case 'X': return "-..-";
         case 'Y': return "-.--";
         case 'Z': return "--..";
-        case ' ': return " / "; // Word separator
-        default: return "";     // Ignore unsupported characters
+        default: return ""; // Ignores numbers and special punctuation
     }
 }
 
 int main() {
     std::string userInput;
 
-    std::cout << "========================================\n";
-    std::cout << "      C++ MORSE CODE TRANSLATOR         \n";
-    std::cout << "========================================\n";
-    std::cout << "Enter a short English message: ";
+    std::cout << "Enter a message in English (A-Z characters only): ";
     std::getline(std::cin, userInput);
 
-    std::cout << "\n--- Character Breakdown ---\n";
-    std::string translatedMessage = "";
+    std::string fullMorse = "";
 
     for (char character : userInput) {
         char upperChar = std::toupper(character);
-        std::string morse = getMorseCode(upperChar);
-
-        if (!morse.empty()) {
-            std::cout << upperChar << " -> " << morse << "\n";
-            translatedMessage += morse + " ";
+        
+        // Ignore spaces and non-alphanumeric characters
+        if (upperChar >= 'A' && upperChar <= 'Z') {
+            std::string morse = getMorseCode(upperChar);
+            std::cout << upperChar << ": " << morse << "\n";
+            fullMorse += morse + "   "; // 3 spaces between letters
         }
     }
 
-    std::cout << "\n--- Full Morse Code Output ---\n";
-    std::cout << translatedMessage << "\n";
+    std::cout << "Full Morse Code Message: " << fullMorse << "\n";
 
     return 0;
 }
